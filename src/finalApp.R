@@ -20,6 +20,8 @@ if (substring(wd,nchar(wd)-2) == "src"){
 wic_voc_path <- file.path("datasets/WIC_VOC_Cleaned.csv")
 wic_voc <- read_csv(wic_voc_path)
 
+
+###REMOVE AND ADD TO CLEAN FILE
 #Creating a subset and applying additional cleaning to data
 wic_voc_filtered <- wic_voc
 wic_voc_filtered$textile_quality_arch <- as.character(wic_voc$textile_quality_arch)
