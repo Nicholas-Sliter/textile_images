@@ -7,6 +7,18 @@ library(debkeepr)
 library(leaflet)
 
 
+update_wd <- function(){
+  
+  wd <- getwd() %>% toString()
+  if (substring(wd,nchar(wd)-13) != "textile_images"){
+    setwd("../")
+    wd <- getwd() %>% toString()
+  }
+  
+  return (wd)
+}
+
+
 
 getColorGroups <- function(col){
   data <- col %>% mutate(colorGroup = ifelse(is.na(textile_color_arch),

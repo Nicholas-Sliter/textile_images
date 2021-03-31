@@ -8,12 +8,21 @@ library(grid)
 library(gridExtra)
 library(jpeg)
 
+source("functions.R")
 
 #Move working directory if in src
-wd <- getwd() %>% toString()
-if (substring(wd,nchar(wd)-2) == "src"){
-  setwd("../")
-}
+# wd <- getwd() %>% toString()
+# if (substring(wd,nchar(wd)-13) != "textile_images"){
+#   setwd("../")
+#   wd <- getwd() %>% toString()
+# }
+
+wd <- update_wd()
+
+# if (substring(wd,nchar(wd)-2) == "src"){
+#   setwd("../")
+#   wd <- getwd() %>% toString()
+# }
 
 
 #Reading in the data 
@@ -40,20 +49,24 @@ text_materials <- read_xlsx("datasets/TextileMaterialDataSet.xlsx")
 
 
 #cleaning text_materials 
-text_samples <- 
-  text_materials %>%
-  mutate(textile_pattern_visual = 
-           str_replace_all(textile_pattern_visual, c("stripe" = "striped", "none" = NA)),
-         image_ID = str_remove_all(image_url, "https://imgur.com/"),
-         Title = NA, 
-         Artist = NA) %>%
-  rename(Date = orig_date)
+# text_samples <- 
+#   text_materials %>%
+#   mutate(textile_pattern_visual = 
+#            str_replace_all(textile_pattern_visual, c("stripe" = "striped", "none" = NA)),
+#          image_ID = str_remove_all(image_url, "https://imgur.com/"),
+#          Title = NA, 
+#          Artist = NA) %>%
+#   rename(Date = orig_date)
+# 
+# #cleaning text_images 
+# text_paintings <- 
+#   text_images %>%
+#   mutate(image_ID = str_remove_all(imgur_url, "https://imgur.com/")) %>%
+#   rename(catalogue_url = source_url)
 
-#cleaning text_images 
-text_paintings <- 
-  text_images %>%
-  mutate(image_ID = str_remove_all(imgur_url, "https://imgur.com/")) %>%
-  rename(catalogue_url = source_url)
+
+text_samples <- read_xlsx("datasets/image_samples.xlsx")
+text_paintings <- read_xlsx("datasets/painting_samples.xlsx")
 
 
 
@@ -324,12 +337,11 @@ server <- function(input, output, session) {
   
   output$ImageSelection  <- renderPlot({
     
+    wd <- update_wd()
     # filename <- normalizePath(file.path(paste0(chosen_data4()$image_ID, 
     #                                            ".jpg", 
     #                                            sep = "")))
-    filename <- paste0(chosen_data4()$image_ID, 
-                       ".jpg", 
-                       sep = "")
+    filename <- normalizePath(paste0(wd,chosen_data4()$filename))
     filename <- filename[file.exists(filename)]
     jpegs = lapply(filename, readJPEG)
     #margin = theme(plot.margin = unit(c(2,2,2,2), "cm"))
