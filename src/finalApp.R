@@ -33,10 +33,10 @@ wic_voc_filtered$textile_quality_arch[wic_voc$textile_quality_arch == "fine"] <-
 #### GROUP 3 CODE ####
 
 #reading in Textile Images dataset 
-text_images <- read_xlsx("TextileImageDataSet.xlsx")
+text_images <- read_xlsx("datasets/TextileImageDataSet.xlsx")
 
 #reading in Textile Materials dataset 
-text_materials <- read_xlsx("TextileMaterialDataSet.xlsx")
+text_materials <- read_xlsx("datasets/TextileMaterialDataSet.xlsx")
 
 
 #cleaning text_materials 
