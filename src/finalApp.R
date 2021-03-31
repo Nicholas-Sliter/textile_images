@@ -11,8 +11,9 @@ library(jpeg)
 #### GROUP 4 CODE ###
 
 
+setwd("../");
 #Reading in the data 
-wic_voc_path <- file.path("WIC_VOC_Cleaned.csv")
+wic_voc_path <- file.path("./datasets/WIC_VOC_Cleaned.csv")
 
 wic_voc <- read_csv(wic_voc_path)
 
