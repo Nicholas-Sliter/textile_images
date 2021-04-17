@@ -10,6 +10,7 @@ library(jpeg)
 
 source("functions.R")
 
+##a
 #Move working directory if in src
 # wd <- getwd() %>% toString()
 # if (substring(wd,nchar(wd)-13) != "textile_images"){
@@ -148,24 +149,27 @@ server <- function(input, output, session) {
   output$Graph <- renderPlot({
     
     #filter the data to only include the selected textile
+    #wic_voc_filtered <- react_data()
+    
+    
     if(input$Color != "All textiles"){wic_voc_filtered <- wic_voc_filtered%>%
       filter(color_category == input$Color)}
-    
+
     if(input$CompanyName != "Both WIC & VOC"){wic_voc_filtered <- wic_voc_filtered %>%
       filter(company == input$CompanyName)}
-    
+
     if(input$TextileQuality != "All textile qualities"){wic_voc_filtered <- wic_voc_filtered %>%
       filter(textile_quality_arch == input$TextileQuality)}
-    
+
     if(input$process != "All textile processes"){wic_voc_filtered <- wic_voc_filtered %>%
       filter(textile_process_arch == input$process)}
-    
+
     if(input$pattern != "All textile patterns"){wic_voc_filtered <- wic_voc_filtered %>%
       filter(textile_pattern_arch == input$pattern)}
-    
+
     if(input$fiber != "All textile fibers"){wic_voc_filtered <- wic_voc_filtered %>%
       filter(textile_fiber_arch == input$fiber)}
-    
+
     #group the data by destination country
     wic_voc_grouped <- wic_voc_filtered %>%
       group_by(dest_loc_region)
@@ -205,7 +209,9 @@ server <- function(input, output, session) {
     if(input$fiber != "All textile fibers"){wic_voc_filtered <- wic_voc_filtered %>%
       filter(textile_fiber_arch == input$fiber)}
     
-    textile_name_list <- unique(wic_voc_filtered$textile_name) 
+    textile_name_list <- unique(wic_voc_filtered$textile_name)
+
+    
     
     return(
       if(length(textile_name_list > 20))
@@ -249,7 +255,8 @@ server <- function(input, output, session) {
   ##### GROUP 3 WORK #####
   
   #making a reactive data frame for chosen data sets 
-  chosen_data0 <- reactive({
+  reactive_image_data <- reactive({
+    ## isolate everything except input$Dataset
     
     if (input$DataSet == "Samples") {chosen_data <- text_samples}
     else {chosen_data <- text_paintings}})
@@ -258,7 +265,7 @@ server <- function(input, output, session) {
   
   #making Primary Color Choices
   output$PrimaryColor <- renderUI({
-    primary_colors <- unique(as.vector(chosen_data0()$textile_color_visual_primary))
+    primary_colors <- unique(as.vector(reactive_image_data()$textile_color_visual_primary))
     selectizeInput(inputId = "PrimaryColor", 
                    label = "Choose a Primary Color", 
                    choices = primary_colors,
@@ -268,17 +275,17 @@ server <- function(input, output, session) {
   
   #making Secondary Color Choices 
   output$SecondaryColor <- renderUI({
-    secondary_colors <- unique(as.vector(chosen_data0()$textile_color_visual_secondary))
+    secondary_colors <- unique(as.vector(reactive_image_data()$textile_color_visual_secondary))
     selectizeInput(inputId = "SecondaryColor", 
                    label = "Choose a Secondary Color", 
                    choices = secondary_colors,
-                   #levels(factor(chosen_data0()$textile_color_visual_secondary)),
+                   #levels(factor(reactive_image_data()$textile_color_visual_secondary)),
                    multiple = TRUE)})
   
   
   #making Pattern Choices
   output$Pattern <- renderUI({
-    patterns <- unique(as.vector(chosen_data0()$textile_pattern_visual))
+    patterns <- unique(as.vector(reactive_image_data()$textile_pattern_visual))
     selectizeInput(inputId = "Pattern", 
                    label = "Choose a Pattern", 
                    choices = patterns,
@@ -286,7 +293,7 @@ server <- function(input, output, session) {
   
   #making Process Choices
   output$Process <- renderUI({
-    process <- unique(as.vector(chosen_data0()$textile_process_visual))
+    process <- unique(as.vector(reactive_image_data()$textile_process_visual))
     selectizeInput(inputId = "Process", 
                    label = "Choose a Process", 
                    choices = process,
@@ -296,9 +303,9 @@ server <- function(input, output, session) {
   chosen_data1 <- reactive({
     
     if (!is.null(input$PrimaryColor))
-    {chosen_data0() %>%
+    {reactive_image_data() %>%
         filter(textile_color_visual_primary %in% input$PrimaryColor)}
-    else{chosen_data0()}
+    else{reactive_image_data()}
   })
   
   
@@ -354,7 +361,7 @@ server <- function(input, output, session) {
   }, 
   width = 900, 
   height = 5000,
-  res = 40)
+  res = 20)
   
   
   
