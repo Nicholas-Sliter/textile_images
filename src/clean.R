@@ -26,7 +26,7 @@ text_samples <-
   rename(Date = orig_date)
 
 text_samples <- text_samples %>% 
-  mutate(filename = paste0("/img/",image_ID,".jpg"))
+  mutate(filename = paste0("img/",image_ID,".jpg"))
 
 text_paintings <- 
   text_images %>%
@@ -34,7 +34,7 @@ text_paintings <-
   rename(catalogue_url = source_url)
 
 text_paintings <- text_paintings %>% 
-  mutate(filename = paste0("/img/",image_ID,".jpg"))
+  mutate(filename = paste0("img/",image_ID,".jpg"))
 
 
 if (substring(wd,nchar(wd)-13) == "textile_images"){

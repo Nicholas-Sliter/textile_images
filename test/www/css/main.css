@@ -1,0 +1,68 @@
+/*Author: Nicholas Sliter   */
+.column {
+    width:25%; /* change it according to your design*/
+}
+.column div {
+    float:left;
+    width:100%;/*so as to give equal width to div */
+    height:400px;/*use your own value*/
+}
+.column:after {
+    content:"";
+    display:block;
+    clear:both;
+}
+
+
+
+.row{
+    columns: 25% 4;
+    -webkit-columns: 25% 4;
+    -moz-columns: 25% 4;
+    -webkit-column-gap: 0;
+    -moz-column-gap: 0;
+    column-gap: 0;
+    -webkit-column-rule: 1px solid #1a242f;
+    -moz-column-rule: 1px solid #1a242f;
+    column-rule: 1px solid #1a242f;
+
+}
+
+
+/*
+.nav {
+  background: #2c3e50;
+  -webkit-columns: 100px 4;
+  -moz-columns: 100px 4;
+  columns: 100px 4;
+  -webkit-column-gap: 0;
+  -moz-column-gap: 0;
+  column-gap: 0;
+  -webkit-column-rule: 1px solid #1a242f;
+  -moz-column-rule: 1px solid #1a242f;
+  column-rule: 1px solid #1a242f;
+}
+
+
+.nav a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 1em;
+  text-align: center;
+  border-bottom: 1px solid #1a242f;
+}
+.nav a:hover {
+  background: #1a242f;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  line-height: 1.45;
+  color: #333;
+  background: #ecf0f1;
+}
+
+
+*/

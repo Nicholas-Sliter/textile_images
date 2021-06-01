@@ -1,0 +1,12 @@
+name: image_test
+title: image_test
+username:
+account: nicholas-sliter
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4003095
+bundleId: 4497923
+url: https://nicholas-sliter.shinyapps.io/image_test/
+when: 1618966803.05846
+asMultiple: FALSE
+asStatic: FALSE
